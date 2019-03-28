@@ -1,0 +1,31 @@
+1. sudo raspi-config
+enable I2C, vnc
+
+2. sudo i2cdetect -y 1 
+	to check if the sensor is properly attached
+	
+3. sudo apt-get install -y build-essential python-pip python-dev python-smbus git
+
+4. git clone https://github.com/adafruit/Adafruit_Python_GPIO
+
+5. cd Adafruit_Python_GPIO
+
+6. sudo python setup.py install
+
+7.  sudo apt-get install -y python-scipy python-pygame
+
+8. sudo pip install color Adafruit_AMG88xx
+
+9. cd ..
+
+10. git clone https://github.com/adafruit/Adafruit_AMG88xx_python.git
+
+/*
+git clone https://github.com/adafruit/Adafruit_CircuitPython_AMG88xx
+*/
+
+11. cd Adafriot_AMG88xx_python/
+
+12. cd examples
+
+13. run test scripts
