@@ -22,7 +22,7 @@ def takeImage(img_name="car_image.png"):
 def getThermalData():
     data = []
     for d in range(1, 64):
-        data.append(round(random.uniform(10.00, 5000.00),1))
+        data.append(round(random.uniform(80.00, 200.00),2))
     return data
 
 def getThermalAverage(data):
@@ -35,15 +35,16 @@ def postData(weight, car_image="car_image.png",thermal_data=""):
     res = {}
 
     print("Calling API1")
-    URL = "https://ca8f77e2.ngrok.io"
+    URL = "https://2e8f664d.ngrok.io"
+    #URL = "https://e2213ee4.ngrok.io/"
     api1 = "/insertRecordedDetails/" + str(weight).replace(".","*") + "/" + str(thermal_data).replace(".","*")
     api2 = "/uploader"
 
     try:
         r = requests.get(URL + api1) 
         data = r.json() 
-        print("Setver Response",data.status)  
-        res['status1'] = data.status
+        print("Setver Response",data)  
+        #res['status1'] = data.status
     except Exception as ex:
         print("Error ->>>",ex)  
         res['status1'] = False
@@ -56,8 +57,8 @@ def postData(weight, car_image="car_image.png",thermal_data=""):
     try:
         r = requests.post(URL + api2, files=files)
         data = r.json() 
-        print("Setver Response",data.status)    
-        res['status2'] = data.status
+        print("Setver Response",data)    
+        #res['status2'] = data.status
     except Exception as ex:
         print("Error ->>>",ex)  
         res['status2'] = False
@@ -142,7 +143,7 @@ while 1:
                 #Take Thermal Data
                 temp = getThermalAverage(getThermalData())
                 #Post weight, car_image, theral_data to server
-                res = postData(w,img,temp)
+                res = postData(w*3/200,img,temp)
                 print(res)
                 cam_triggered = True    
             else:
@@ -157,3 +158,4 @@ while 1:
         cam_triggered = False
 
     time.sleep(delay_between_weight_reload)
+

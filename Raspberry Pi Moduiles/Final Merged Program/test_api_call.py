@@ -2,7 +2,7 @@ import time
 import requests
 def postData(weight, car_image="car_image.png",thermal_data=""):
     print("Calling API1")
-    URL = "http://localhost:5000"
+    URL = "https://2e8f664d.ngrok.io"
     api1 = "/insertRecordedDetails/" + str(weight).replace(".","*") + "/" + str(thermal_data).replace(".","*")
     api2 = "/uploader"
 
@@ -16,7 +16,7 @@ def postData(weight, car_image="car_image.png",thermal_data=""):
     
     # # sending get request and saving the response as response object 
     r = requests.get(URL + api1) 
-        s
+        
     # # extracting data in json format 
     # data = r.json() 
     # print("Setver Response",data.status)  
