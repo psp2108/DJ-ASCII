@@ -3,6 +3,7 @@ import RPi.GPIO as gpio
 import time
 import random
 import requests
+import json
 
 def takeImage(img_name="car_image.png"):
     cam = cv2.VideoCapture(0)
@@ -21,43 +22,48 @@ def takeImage(img_name="car_image.png"):
 def getThermalData():
     data = []
     for d in range(1, 64):
-        data.append(round(random.uniform(10.00, 50.00),1))
+        data.append(round(random.uniform(10.00, 5000.00),1))
     return data
 
-def postData(weight, car_image="car_image.png",theral_data=""):
+def getThermalAverage(data):
+    temp = 0
+    for i in data:
+        temp += i
+    return temp/len(data)
+
+def postData(weight, car_image="car_image.png",thermal_data=""):
+    res = {}
+
     print("Calling API1")
     URL = "https://ca8f77e2.ngrok.io"
     api1 = "/insertRecordedDetails/" + str(weight).replace(".","*") + "/" + str(thermal_data).replace(".","*")
-    api2 = "/getRecords"
+    api2 = "/uploader"
 
-    # URL = "http://maps.googleapis.com/maps/api/geocode/json"
-    
-    # # location given here 
-    # location = "delhi technological university"
-    
-    # # defining a params dict for the parameters to be sent to the API 
-    # PARAMS = {'address':location} 
-    
-    # # sending get request and saving the response as response object 
-    r = requests.get(url = URL + api1) 
-    
-    # # extracting data in json format 
-    data = r.json() 
-    print("Setver Response",data.status)  
+    try:
+        r = requests.get(URL + api1) 
+        data = r.json() 
+        print("Setver Response",data.status)  
+        res['status1'] = data.status
+    except Exception as ex:
+        print("Error ->>>",ex)  
+        res['status1'] = False
 
     time.sleep(2)
     print("Calling API2")
 
-    # url = "http://localhost:5000/uploader"
     fin = open(car_image, 'rb')
     files = {'file': fin}
     try:
-        r = requests.post(url = URL + api2, files=files)
+        r = requests.post(URL + api2, files=files)
         data = r.json() 
-        print("Setver Response",data.status)  
+        print("Setver Response",data.status)    
+        res['status2'] = data.status
+    except Exception as ex:
+        print("Error ->>>",ex)  
+        res['status2'] = False
     finally:
         fin.close()
-
+    return res
     
 def setCursor(x,y):
     if y == 0:
@@ -134,9 +140,9 @@ while 1:
                 #Capture Imaage 
                 img = takeImage()
                 #Take Thermal Data
-                data = getThermalData()
+                temp = getThermalAverage(getThermalData())
                 #Post weight, car_image, theral_data to server
-                res = postData(w,img,data)
+                res = postData(w,img,temp)
                 print(res)
                 cam_triggered = True    
             else:
