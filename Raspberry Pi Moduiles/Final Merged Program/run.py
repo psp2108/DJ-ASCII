@@ -25,16 +25,11 @@ def getThermalData():
     return data
 
 def postData(weight, car_image="car_image.png",theral_data=""):
-    # url = "http://localhost:5000/uploader"
-    # fin = open(car_image, 'rb')
-    # files = {'file': fin}
-    # try:
-    #     r = requests.post(url, files=files)
-    #     print(r.text)
-    # finally:
-    #     fin.close()
+    print("Calling API1")
+    URL = "https://ca8f77e2.ngrok.io"
+    api1 = "/insertRecordedDetails/" + str(weight).replace(".","*") + "/" + str(thermal_data).replace(".","*")
+    api2 = "/getRecords"
 
-    
     # URL = "http://maps.googleapis.com/maps/api/geocode/json"
     
     # # location given here 
@@ -44,12 +39,25 @@ def postData(weight, car_image="car_image.png",theral_data=""):
     # PARAMS = {'address':location} 
     
     # # sending get request and saving the response as response object 
-    # r = requests.get(url = URL, params = PARAMS) 
+    r = requests.get(url = URL + api1) 
     
     # # extracting data in json format 
-    # data = r.json() 
-    # print(data)  
-    pass
+    data = r.json() 
+    print("Setver Response",data.status)  
+
+    time.sleep(2)
+    print("Calling API2")
+
+    # url = "http://localhost:5000/uploader"
+    fin = open(car_image, 'rb')
+    files = {'file': fin}
+    try:
+        r = requests.post(url = URL + api2, files=files)
+        data = r.json() 
+        print("Setver Response",data.status)  
+    finally:
+        fin.close()
+
     
 def setCursor(x,y):
     if y == 0:
