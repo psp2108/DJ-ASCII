@@ -49,7 +49,6 @@ def readCount():
 
 #begin()
 
-
 time.sleep(3)
 sample= readCount()
 flag=0
