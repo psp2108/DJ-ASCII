@@ -1,0 +1,15 @@
+1. Weight (just confirm once should we calculate weight on each wheel or what?)
+2. Temperature or/and Thermal image (in reality some part of engine gets hotter so i guess thermal image would be a best option bcoz finding average temperature wont be a good option atleast i feel like this)
+3. Pollution a vehicle is making (data will be direct under leagal range or not processed on microcontroller itself)???
+4. Real image of car as it is approaching towards the barrier
+5. Checking if the sliencer is producing a sound which is under a approved sound level
+
+
+
+
+1. Detect Vehicle
+2. Camera
+3. Pollution
+4. Sound
+5. Weight
+6. Temperature/Thermal Camera
