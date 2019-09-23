@@ -2,7 +2,7 @@ import time
 import requests
 def postData(weight, car_image="car_image.png",thermal_data=""):
     print("Calling API1")
-    URL = "https://2e8f664d.ngrok.io"
+    URL = "https://3cc5aae9.ngrok.io"
     api1 = "/insertRecordedDetails/" + str(weight).replace(".","*") + "/" + str(thermal_data).replace(".","*")
     api2 = "/uploader"
 
