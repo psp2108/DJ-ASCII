@@ -126,12 +126,6 @@ def readCount():
   gpio.output(DT,1)
   gpio.output(SCK,0)
   gpio.setup(DT, gpio.IN)
-  
-  ######## SETTING RGB ##########
-  gpio.setup(pred, gpio.OUT)
-  gpio.setup(pgreen, gpio.OUT)
-  gpio.setup(pblue, gpio.OUT)
-  ###############################
 
 
   while gpio.input(DT) == 1:
@@ -178,6 +172,13 @@ delay_between_weight_reload = 1
 gpio.setwarnings(False)
 gpio.setmode(gpio.BCM)
 gpio.setup(SCK, gpio.OUT)
+
+  
+######## SETTING RGB ##########
+gpio.setup(pred, gpio.OUT)
+gpio.setup(pgreen, gpio.OUT)
+gpio.setup(pblue, gpio.OUT)
+###############################
 
 rgb_cyan()
 
