@@ -90,7 +90,10 @@ def postData(weight, car_image="car_image.png",thermal_data=""):
         print("Error ->>>",ex)  
         res['status1'] = False
 
+    rgb_red()
     time.sleep(2)
+    rgb.blue()
+
     print("Calling API2")
 
     fin = open(car_image, 'rb')
@@ -105,6 +108,8 @@ def postData(weight, car_image="car_image.png",thermal_data=""):
         res['status2'] = False
     finally:
         fin.close()
+
+    rgb_red()
     return res
     
 def setCursor(x,y):
@@ -167,6 +172,8 @@ gpio.setwarnings(False)
 gpio.setmode(gpio.BCM)
 gpio.setup(SCK, gpio.OUT)
 
+rgb_cyan()
+
 print("Preparing to read sample")
 time.sleep(3)
 sample= readCount()
@@ -176,11 +183,15 @@ while 1:
     count= readCount()
     # w=0
     w=-(sample-count)/calibration_factor
+    rgb_green()
     print(">>>>",w,"<<<<")
+
     if w > min_weight:
+        rgb_yellow()
         print("Weight Detected",str(w) + "grams")
         time_counter += 1
         if delay_between_weight_reload * time_counter >= time_to_trigger_cam:
+            rgb_red()
             print("Wait over")
             if not cam_triggered:
                 print("Camera Triggered")
@@ -189,6 +200,7 @@ while 1:
                 #Take Thermal Data
                 temp = getThermalAverage(getThermalData())
                 #Post weight, car_image, theral_data to server
+                rgb_blue()
                 res = postData(w*3/200,img,temp)
                 print(res)
                 cam_triggered = True    
