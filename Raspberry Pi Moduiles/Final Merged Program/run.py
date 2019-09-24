@@ -76,7 +76,7 @@ def postData(weight, car_image="car_image.png",thermal_data=""):
     res = {}
 
     print("Calling API1")
-    URL = "https://2e8f664d.ngrok.io"
+    URL = "https://2288482c.ngrok.io"
     #URL = "https://e2213ee4.ngrok.io/"
     api1 = "/insertRecordedDetails/" + str(weight).replace(".","*") + "/" + str(thermal_data).replace(".","*")
     api2 = "/uploader"
@@ -187,42 +187,46 @@ time.sleep(3)
 sample= readCount()
 print("Sample Readed")
 flag=0
-while 1:
-    count= readCount()
-    # w=0
-    w=-(sample-count)/calibration_factor
-    rgb_green()
-    print(">>>>",w,"<<<<")
+try:
 
-    if w > min_weight:
-        rgb_pink()
-        print("Weight Detected",str(w) + "grams")
-        time_counter += 1
-        if delay_between_weight_reload * time_counter >= time_to_trigger_cam:
-            rgb_red()
-            print("Wait over")
-            if not cam_triggered:
-                print("Camera Triggered")
-                #Capture Imaage 
-                img = takeImage()
-                #Take Thermal Data
-                temp = getThermalAverage(getThermalData())
-                #Post weight, car_image, theral_data to server
-                rgb_blue()
-                res = postData(w*3/200,img,temp)
-                print(res)
-                cam_triggered = True    
+    while 1:
+        count= readCount()
+        # w=0
+        w=-(sample-count)/calibration_factor
+        rgb_green()
+        print(">>>>",w,"<<<<")
+
+        if w > min_weight:
+            rgb_pink()
+            print("Weight Detected",str(w) + "grams")
+            time_counter += 1
+            if delay_between_weight_reload * time_counter >= time_to_trigger_cam:
+                rgb_red()
+                print("Wait over")
+                if not cam_triggered:
+                    print("Camera Triggered")
+                    #Capture Imaage 
+                    img = takeImage()
+                    #Take Thermal Data
+                    temp = getThermalAverage(getThermalData())
+                    #Post weight, car_image, theral_data to server
+                    rgb_blue()
+                    res = postData(w*3/200,img,temp)
+                    print(res)
+                    cam_triggered = True    
+                else:
+                    rgb_green()
+                    print("Camera not triggered")
             else:
-                rgb_green()
-                print("Camera not triggered")
+                print("Waiting..", time_counter)
         else:
-            print("Waiting..", time_counter)
-    else:
-        print("No Weight")
-        time_counter = 0
-        if cam_triggered:
-            pass
-        cam_triggered = False
+            print("No Weight")
+            time_counter = 0
+            if cam_triggered:
+                pass
+            cam_triggered = False
 
-    time.sleep(delay_between_weight_reload)
+        time.sleep(delay_between_weight_reload)
 
+finally:
+    gpio.cleanup()
