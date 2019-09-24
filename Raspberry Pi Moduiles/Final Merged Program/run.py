@@ -191,7 +191,7 @@ try:
     while 1:
         count= readCount()
         # w=0
-        w=(sample-count)/calibration_factor
+        w=-(sample-count)/calibration_factor
         rgb_green()
         print(">>>>",w,"<<<<")
 
@@ -224,7 +224,7 @@ try:
             if cam_triggered:
                 pass
             cam_triggered = False
-            # sample = count
+            sample = count
 
         time.sleep(delay_between_weight_reload)
 
