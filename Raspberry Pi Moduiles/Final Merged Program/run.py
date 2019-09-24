@@ -163,7 +163,7 @@ LOW=0
 sample=0
 val=0
 calibration_factor = 210
-min_weight = 50
+min_weight = 100
 cam_triggered = False
 time_counter = 0
 time_to_trigger_cam = 4 #sec
@@ -188,11 +188,10 @@ sample= readCount()
 print("Sample Readed")
 flag=0
 try:
-
     while 1:
         count= readCount()
         # w=0
-        w=-(sample-count)/calibration_factor
+        w=(sample-count)/calibration_factor
         rgb_green()
         print(">>>>",w,"<<<<")
 
@@ -225,6 +224,7 @@ try:
             if cam_triggered:
                 pass
             cam_triggered = False
+            # sample = count
 
         time.sleep(delay_between_weight_reload)
 
