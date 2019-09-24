@@ -195,7 +195,7 @@ while 1:
     print(">>>>",w,"<<<<")
 
     if w > min_weight:
-        rgb_yellow()
+        rgb_pink()
         print("Weight Detected",str(w) + "grams")
         time_counter += 1
         if delay_between_weight_reload * time_counter >= time_to_trigger_cam:
@@ -213,6 +213,7 @@ while 1:
                 print(res)
                 cam_triggered = True    
             else:
+                rgb_green()
                 print("Camera not triggered")
         else:
             print("Waiting..", time_counter)
