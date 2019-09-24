@@ -5,6 +5,47 @@ import random
 import requests
 import json
 
+def rgb_off():
+    GPIO.output(pred, False)
+    GPIO.output(pgreen, False)
+    GPIO.output(pblue, False)
+
+def rgb_red():
+    GPIO.output(pred, True)
+    GPIO.output(pgreen, False)
+    GPIO.output(pblue, False)
+
+def rgb_green():
+    GPIO.output(pred, False)
+    GPIO.output(pgreen, True)
+    GPIO.output(pblue, False)
+
+def rgb_blue():
+    GPIO.output(pred, False)
+    GPIO.output(pgreen, False)
+    GPIO.output(pblue, True)
+
+def rgb_yellow():
+    GPIO.output(pred, True)
+    GPIO.output(pgreen, True)
+    GPIO.output(pblue, False)
+
+def rgb_pink():
+    GPIO.output(pred, True)
+    GPIO.output(pgreen, False)
+    GPIO.output(pblue, True)
+    
+def rgb_cyan():
+    GPIO.output(pred, False)
+    GPIO.output(pgreen, True)
+    GPIO.output(pblue, True)
+
+def rgb_white():
+    GPIO.output(pred, True)
+    GPIO.output(pgreen, True)
+    GPIO.output(pblue, True)
+
+
 def takeImage(img_name="car_image.png"):
     cam = cv2.VideoCapture(0)
     # cv2.namedWindow("test")
@@ -103,7 +144,12 @@ def readCount():
 
 ########################################################
 
-    
+#####RGB####
+pred = 23
+pgreen = 18
+pblue = 15
+############
+
 DT =21
 SCK=20
 HIGH=1
