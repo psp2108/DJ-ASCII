@@ -108,8 +108,8 @@ def postData(weight, car_image="car_image.png",thermal_data=""):
         res['status2'] = False
     finally:
         fin.close()
+        rgb_green()
 
-    rgb_red()
     return res
     
 def setCursor(x,y):
